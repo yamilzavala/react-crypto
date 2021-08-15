@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import RowCoins from "./RowCoins";
+import CryptoContext from "../context/Crypto/CryptoContext";
 
 const titles = ["#", "Coin", "Price", "Price Change", "24h volume"];
 
-export default function TableCoins({ coin, filterValue }) {
-  const filteredCoin = coin.filter(
+export default function TableCoins({ filterValue }) {
+  useEffect(() => {
+    getCryptoData();
+  }, []);
+
+  const { coins, getCryptoData } = useContext(CryptoContext);
+
+  const filteredCoin = coins.filter(
     (currentCoin) =>
-    currentCoin.id.toLowerCase().includes(filterValue) |
-    currentCoin.symbol.toLowerCase().includes(filterValue)
+      currentCoin.id.toLowerCase().includes(filterValue) |
+      currentCoin.symbol.toLowerCase().includes(filterValue)
   );
 
   return (
